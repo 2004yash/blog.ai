@@ -2,6 +2,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { Sparkles, Loader2 } from "lucide-react";
 
 export default function Home() {
   const router = useRouter();
@@ -37,7 +38,6 @@ export default function Home() {
     }
 
     setLoading(true);
-
     try {
       const data = {
         title: response.title,
@@ -50,10 +50,10 @@ export default function Home() {
 
       const res = await axios.post("/api/blogs", data);
 
-      if (res.status === 201 || res.status === 200) {
-        // alert("Blog published successfully!");
+      if (res.status === 200 || res.status === 201) {
         setResponse(null);
         setPrompt("");
+        setAuthor("");
         router.push("/blogs");
       } else {
         alert("Failed to publish blog. Please try again.");
@@ -67,51 +67,69 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-background text-foreground font-sans flex flex-col items-center justify-center p-4">
-      <h1 className="text-2xl font-bold mb-6">AI Blog Generator</h1>
+    <main className="min-h-screen bg-gradient-to-br from-yellow-100 via-pink-100 to-blue-100 text-zinc-900 dark:text-white flex flex-col items-center justify-center px-4 py-12 font-sans">
+      <h1 className="text-4xl sm:text-5xl font-bold text-center mb-6 text-red-500 drop-shadow-md">
+        ⚡ PokéBlog Generator
+      </h1>
 
-      <div className="w-full max-w-xl space-y-4">
+      <div className="w-full max-w-2xl bg-white dark:bg-zinc-800 p-6 rounded-2xl shadow-xl border border-yellow-300">
         <input
           type="text"
-          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400 bg-white text-black dark:bg-zinc-900 dark:text-white"
-          placeholder="Enter your name..."
+          className="w-full mb-4 p-3 rounded-lg border border-red-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-zinc-900 dark:text-white"
+          placeholder="Your Trainer Name"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
         />
+
         <textarea
-          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400 bg-white text-black dark:bg-zinc-900 dark:text-white"
+          className="w-full mb-4 p-3 rounded-lg border border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:bg-zinc-900 dark:text-white"
           rows={3}
-          placeholder="Enter your blog topic..."
+          placeholder="What topic should Pikachu write about?"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
         />
 
         <button
           onClick={handleSubmit}
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
           disabled={loading}
+          className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg transition flex items-center justify-center gap-2"
         >
-          {loading ? "Generating..." : "Generate Blog"}
+          {loading ? (
+            <>
+              <Loader2 className="animate-spin h-5 w-5" />
+              Generating...
+            </>
+          ) : (
+            <>
+              <Sparkles className="h-5 w-5" />
+              Generate Blog
+            </>
+          )}
         </button>
 
         {response && (
-          <div>
-            <div className="mt-6 bg-white dark:bg-zinc-900 shadow-md rounded-md p-4 space-y-4">
-              <h2 className="text-xl font-semibold">{response.title}</h2>
-              <p>{response.para1}</p>
-              <p>{response.para2}</p>
-              <p>{response.para3}</p>
-            </div>
+          <div className="mt-6 bg-yellow-50 dark:bg-zinc-900 border border-yellow-400 p-6 rounded-xl space-y-4">
+            <h2 className="text-2xl font-extrabold text-blue-700 dark:text-yellow-300 underline decoration-red-400 underline-offset-4">
+              {response.title}
+            </h2>
+            <p className="text-base">{response.para1}</p>
+            <p className="text-base">{response.para2}</p>
+            <p className="text-base">{response.para3}</p>
+
             <button
-              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
               onClick={handlePublish}
               disabled={loading}
+              className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded-lg transition"
             >
-              Publish
+              {loading ? "Publishing..." : "🎉 Publish Blog"}
             </button>
           </div>
         )}
       </div>
+
+      <footer className="mt-12 text-center text-sm text-gray-500">
+        Made with ❤️ and ⚡ by your favorite Pokémon trainer
+      </footer>
     </main>
   );
 }
