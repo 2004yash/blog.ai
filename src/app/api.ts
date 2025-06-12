@@ -3,7 +3,7 @@
 import { GoogleGenAI } from "@google/genai";
 // import { blogModel } from "./db";
 
-const apiKey = process.env.AI_API_kEY;
+const apiKey = process.env.AI_API_KEY;
 
 const ai = new GoogleGenAI({ apiKey });
 
