@@ -165,7 +165,7 @@ export default function Home() {
               </label>
               <input
                 type="text"
-                className="w-full p-3 rounded-lg border-2 border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-blue-50"
+                className="w-full p-3 rounded-lg border-2 border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-blue-50 text-gray-900 placeholder-gray-500"
                 placeholder="Enter your trainer name..."
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
@@ -181,7 +181,7 @@ export default function Home() {
                 Blog Topic
               </label>
               <textarea
-                className="w-full p-3 rounded-lg border-2 border-red-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 bg-red-50 resize-none"
+                className="w-full p-3 rounded-lg border-2 border-red-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 bg-red-50 resize-none text-gray-900 placeholder-gray-500"
                 rows={3}
                 placeholder="What topic should Pikachu write about? ⚡"
                 value={prompt}
