@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
-import { json } from "stream/consumers";
-const { Schema } = mongoose;
 
-if (!process.env.MONGODB_URL) throw new Error("Missing GOOGLE_API_KEY");
-const uri: string = process.env.MONGODB_URL;
+import mongoose, { Schema, models, model } from "mongoose";
+
+const uri = process.env.MONGODB_URL || "";
+
+if (!uri) throw new Error("Missing MONGODB_URL in environment variables");
 
 let isConnected = false;
 
@@ -27,15 +27,15 @@ const blogSchema = new Schema({
   },
   para1: {
     type: String,
-    default: ""
+    default: "",
   },
   para2: {
     type: String,
-    default: ""
+    default: "",
   },
   para3: {
     type: String,
-    default: ""
+    default: "",
   },
   publishedDate: {
     type: Date,
@@ -43,7 +43,8 @@ const blogSchema = new Schema({
   },
   author: {
     type: String,
+    default: "Anonymous",
   },
 });
 
-export const blogModel = mongoose.model("blog", blogSchema);
+export const blogModel = models.Blog || model("Blog", blogSchema);

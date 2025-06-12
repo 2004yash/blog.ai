@@ -51,7 +51,7 @@ export default function Home() {
       const res = await axios.post("/api/blogs", data);
 
       if (res.status === 201 || res.status === 200) {
-        alert("Blog published successfully!");
+        // alert("Blog published successfully!");
         setResponse(null);
         setPrompt("");
         router.push("/blogs");

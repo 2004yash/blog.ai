@@ -20,7 +20,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { title, para1, para2, para3 } = body;
+    const { title, para1, para2, para3, author, publishedDate } = body;
 
     if (!title || !para1 || !para2 || !para3) {
       return NextResponse.json(
@@ -36,6 +36,8 @@ export async function POST(req: NextRequest) {
       para1,
       para2,
       para3,
+      author,
+      publishedDate
     });
 
     return NextResponse.json(newBlog, { status: 201 });
