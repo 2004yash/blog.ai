@@ -3,15 +3,15 @@ import { connectToDB } from "@/app/db";
 import { blogModel } from "@/app/db";
 import { Types } from "mongoose";
 
+// @ts-ignore
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: any
 ) {
   try {
     await connectToDB();
 
-    const blogId = params.id;
-    console.log(blogId)
+    const blogId = context.params.id;
 
     if (!Types.ObjectId.isValid(blogId)) {
       return NextResponse.json({ error: "Invalid blog ID" }, { status: 400 });
